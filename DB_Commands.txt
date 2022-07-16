@@ -1,0 +1,88 @@
+--Crear base de datos
+create database UPI
+--crear tabla
+create table USUARIO 
+(
+	Codigo int identity(1,1), --identity es para que vaya agregando uno por uno los numeros--
+	Nombre varchar (50) not null,
+	Clave varchar (30) not null,
+)
+
+--Crear tabla articulos tarea 3
+create table ARTICULOS 
+(
+	Codigo int identity(1,1), --identity es para que vaya agregando uno por uno los numeros--
+	Descripcion varchar (50) not null,
+	Cantidad varchar (30) not null,
+	Precio int not null,
+	Fecha date not null
+)
+
+--Insertar Registros
+INSERT INTO USUARIO values ('Josue','123'),('Juana','456')
+--Insertar 1 registro
+INSERT INTO USUARIO (nombre, clave) values ('Blanca','238')
+INSERT INTO ARTICULOS(Descripcion, Cantidad,Precio,Fecha) values ('Mouse Gamer Razer','20','67000','2022-07-08')
+--Procedimientos almacenados
+
+create proc ConsultarUsuario
+as
+	begin
+	select * from USUARIO
+	end
+
+alter proc ConsultarUsuarioFiltro
+ @nombre varchar(50)
+as
+	begin
+	select * from USUARIO where nombre = @nombre
+	end
+
+alter proc BorrarUsuario
+ @codigo int
+as
+	begin
+	delete usuario where codigo = @codigo
+	end
+
+--exec ConsultarUsuarioFiltro 'Pepito'
+
+create proc ActualizarUsuario
+ @clave varchar(30),
+ @nombre varchar(50),
+ @codigo int
+as
+	begin
+	update usuario set clave=@clave, nombre=@nombre where codigo=@codigo
+	end
+
+create proc ConsultarArticulo
+as
+	begin
+	select * from ARTICULOS
+	end
+
+create proc ConsultarArticuloFiltro
+ @codigo int
+as
+	begin
+	select * from ARTICULOS where Codigo = @codigo
+	end
+
+create proc BorrarArticulo
+ @codigo int
+as
+	begin
+	delete ARTICULOS where codigo = @codigo
+	end
+
+create proc AgregarArticulo
+ @descripcion varchar(50),
+ @cantidad varchar(30),
+ @precio int,
+ @fecha date
+as
+	begin
+	INSERT INTO ARTICULOS(Descripcion, Cantidad,Precio,Fecha) values (@descripcion,@cantidad,@precio,@fecha)
+	end
+
